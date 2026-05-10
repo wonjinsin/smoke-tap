@@ -82,10 +82,10 @@
       .grade-badge {
         display: inline-flex; align-items: center; gap: 6px;
         padding: 4px 10px; border-radius: 999px;
-        background: var(--red-soft); color: var(--red);
+        background: var(--amber-soft); color: var(--amber);
         font-size: 12px; font-weight: 600; font-family: "JetBrains Mono", monospace;
       }
-      .grade-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--red); }
+      .grade-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--amber); }
       .score-hero .desc { font-size: 13px; color: var(--text-2); line-height: 1.5; margin-top: 10px; }
       .score-hero hr { border: 0; border-top: 1px solid var(--border); margin: 18px 0 14px; }
       .mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -242,7 +242,7 @@
         <div class="header-meta">
           <div>점수 측정 <strong>2026-05-10</strong></div>
           <div>브랜치 <strong>master</strong></div>
-          <div>모듈 <strong>12</strong> · 컨텍스트 파일 <strong>10</strong></div>
+          <div>모듈 <strong>12</strong> · 컨텍스트 파일 <strong>21</strong></div>
         </div>
       </header>
 
@@ -251,28 +251,29 @@
         <div class="score-hero">
           <div class="label">AI 준비도 지수</div>
           <div class="value">
-            <span class="num">13</span><span class="denom">/ 100</span>
+            <span class="num">56</span><span class="denom">/ 100</span>
           </div>
           <div class="grade-row">
             <span class="grade-badge">
-              <span class="grade-dot"></span> AI-Hostile · 에이전트 비친화
+              <span class="grade-dot"></span> AI-Fragile · 부분 지원 단계
             </span>
           </div>
           <div class="desc">
             7개 카테고리 · 가중치 차등 (A 15 · B 20 · C 20 · D 15 · E 15 · F 10 · G 5).
-            <strong>A 탐색 커버리지 (0/15)</strong>, <strong>C 암묵지 외부화 (0/20)</strong>,
-            <strong>F 신선도 (0/10)</strong>, <strong>G 성과 측정 (0/5)</strong> 4개 카테고리가
-            완전 0점. <strong>컨텍스트 31개 참조 중 26개가 깨진 경로</strong>로 E1을 무너뜨림.
+            <strong>A 탐색 커버리지 (14/15)</strong>와 <strong>F 신선도 (8/10)</strong>가
+            대폭 개선. <strong>B 문서 품질 (10/20)</strong>, <strong>C 암묵지 외부화 (10/20)</strong>
+            은 중간 수준. <strong>E 검증 게이트 (6/15)</strong>와 <strong>G 성과 측정 (0/5)</strong>이
+            주요 잔여 과제.
           </div>
           <hr />
           <div class="mini-stats">
             <div class="mini-stat">
               <div class="k">컨텍스트 보유 모듈</div>
-              <div class="v" style="color: var(--red)">0 / 12</div>
+              <div class="v" style="color: var(--amber)">11 / 12</div>
             </div>
             <div class="mini-stat">
               <div class="k">잘못된 경로</div>
-              <div class="v" style="color: var(--red)">26 / 31</div>
+              <div class="v" style="color: var(--amber)">35 / 76</div>
             </div>
             <div class="mini-stat">
               <div class="k">300줄 초과 파일</div>
@@ -296,73 +297,60 @@
             <div class="idx">A</div>
             <div>
               <div class="title">AI 탐색 & 커버리지</div>
-              <div class="sub">12개 핵심 모듈 모두 CLAUDE.md / AGENTS.md 부재 · root CLAUDE.md 1개만 존재</div>
+              <div class="sub">11/12 모듈 CLAUDE.md 보유 · docs/ 모듈만 미보유</div>
             </div>
-            <div class="bar bar-bad"><span style="width: 0%"></span></div>
-            <div class="num" style="color: var(--red)">0/15</div>
+            <div class="bar bar-good"><span style="width: 93%"></span></div>
+            <div class="num" style="color: var(--green)">14/15</div>
           </div>
 
           <div class="rule-row">
             <div class="idx">B</div>
             <div>
               <div class="title">컨텍스트 문서 품질</div>
-              <div class="sub">conciseness 초과 7건 · bash 코드블록 · Why/Note 마커 · cross-link 부족</div>
+              <div class="sub">conciseness 초과 6건 (Pods README 포함) · bash 코드블록 · cross-link 부족</div>
             </div>
-            <div class="bar bar-bad"><span style="width: 40%"></span></div>
-            <div class="num">8/20</div>
-          </div>
-          <div class="sub-rule">
-            <span class="si">B1 간결성 <b>1/4</b></span>
-            <span class="si">B2 명령어 <b>1/4</b></span>
-            <span class="si">B3 핵심 파일 <b>3/4</b></span>
-            <span class="si">B4 비명시 <b>2/4</b></span>
-            <span class="si">B5 상호참조 <b>1/4</b></span>
+            <div class="bar bar-warn"><span style="width: 50%"></span></div>
+            <div class="num">10/20</div>
           </div>
 
           <div class="rule-row">
             <div class="idx">C</div>
             <div>
               <div class="title">암묵지 외부화</div>
-              <div class="sub">MEMORY.md / ADR / docs/decisions 부재 · Five-Question 통과 0/5</div>
+              <div class="sub">MEMORY.md · ARCHITECTURE.md 신설 · Cross-module deps 섹션 절반 이상 누락</div>
             </div>
-            <div class="bar bar-bad"><span style="width: 0%"></span></div>
-            <div class="num" style="color: var(--red)">0/20</div>
+            <div class="bar bar-warn"><span style="width: 50%"></span></div>
+            <div class="num">10/20</div>
           </div>
 
           <div class="rule-row">
             <div class="idx">D</div>
             <div>
               <div class="title">모듈 간 의존성 매핑</div>
-              <div class="sub">ARCHITECTURE.md · mermaid 부재 · 의존성 섹션 12개 중 3개만</div>
+              <div class="sub">ARCHITECTURE.md 존재 · mermaid 다이어그램 부재 · 의존성 섹션 절반 누락</div>
             </div>
-            <div class="bar bar-bad"><span style="width: 13%"></span></div>
-            <div class="num">2/15</div>
+            <div class="bar bar-warn"><span style="width: 53%"></span></div>
+            <div class="num">8/15</div>
           </div>
 
           <div class="rule-row">
             <div class="idx">E</div>
             <div>
               <div class="title">검증 & 품질 게이트</div>
-              <div class="sub"><strong style="color: var(--red)">⚠ hallucinated 26 / 31 ref</strong> · CODEOWNERS · evals 부재</div>
+              <div class="sub"><strong style="color: var(--amber)">⚠ hallucinated 35 / 76 ref</strong> · CODEOWNERS · evals 부재 · husky 게이트 신설</div>
             </div>
-            <div class="bar bar-bad"><span style="width: 20%"></span></div>
-            <div class="num">3/15</div>
-          </div>
-          <div class="sub-rule">
-            <span class="si">E1 참조 정확도 <b>1/5</b></span>
-            <span class="si">E2 비평 검토 <b>0/4</b></span>
-            <span class="si">E3 빌드/테스트 <b>2/3</b></span>
-            <span class="si">E4 프롬프트 테스트 <b>0/3</b></span>
+            <div class="bar bar-bad"><span style="width: 40%"></span></div>
+            <div class="num">6/15</div>
           </div>
 
           <div class="rule-row">
             <div class="idx">F</div>
             <div>
               <div class="title">신선도 & 자가 유지보수</div>
-              <div class="sub">CI 검증 step 없음 · pre-commit/pre-push hook 없음</div>
+              <div class="sub">husky pre-commit hook 가동 · CI context 검증 step 없음</div>
             </div>
-            <div class="bar bar-bad"><span style="width: 0%"></span></div>
-            <div class="num" style="color: var(--red)">0/10</div>
+            <div class="bar bar-good"><span style="width: 80%"></span></div>
+            <div class="num" style="color: var(--green)">8/10</div>
           </div>
 
           <div class="rule-row">
@@ -385,8 +373,8 @@
             <div class="sub">노드 = 디렉터리 · 카드 내부 수치는 코드 파일 수 · 빨간 점 = CLAUDE.md 부재</div>
           </div>
           <div class="map-legend">
-            <span><span class="legend-dot" style="background: var(--accent)"></span> CLAUDE.md 보유</span>
-            <span><span class="legend-dot" style="background: var(--red)"></span> 컨텍스트 부재</span>
+            <span><span class="legend-dot" style="background: var(--accent)"></span> CLAUDE.md 보유 (11/12)</span>
+            <span><span class="legend-dot" style="background: var(--red)"></span> 컨텍스트 부재 (docs/)</span>
             <span><span class="legend-square" style="background: var(--red-soft); border: 1px solid var(--red)"></span> 400줄 초과</span>
             <span><span class="legend-square" style="background: var(--amber-soft); border: 1px solid var(--amber)"></span> 300–400줄</span>
           </div>
@@ -430,10 +418,10 @@
               <rect class="node-card accent" width="300" height="70" rx="8" />
               <circle cx="22" cy="22" r="14" class="claude-ring" />
               <circle cx="22" cy="22" r="6" class="claude-dot" />
-              <text x="44" y="26" class="node-title">CLAUDE.md (root)</text>
-              <text x="44" y="42" class="node-meta">유일한 컨텍스트 문서 · 압축 필요 (≥100 ln)</text>
-              <text x="44" y="58" class="node-meta" style="fill: var(--amber); font-weight: 600">
-                123 lines · 권장 25–35
+              <text x="44" y="26" class="node-title">CLAUDE.md (root) + MEMORY.md + ARCHITECTURE.md</text>
+              <text x="44" y="42" class="node-meta">core 문서 3종 완비 · 21개 컨텍스트 파일</text>
+              <text x="44" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">
+                11 / 12 모듈 CLAUDE.md 보유
               </text>
               <text x="284" y="26" text-anchor="end" class="node-kpi" style="fill: var(--accent)">루트</text>
             </g>
@@ -441,51 +429,51 @@
             <!-- ============ 앱 레이어 column ============ -->
             <!-- app/ -->
             <g transform="translate(60,180)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">app/</text>
               <text x="42" y="42" class="node-meta">Expo Router · _layout · index · settings</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">
-                CLAUDE.md 없음
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">
+                CLAUDE.md 보유
               </text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">5 files</text>
             </g>
 
             <!-- components/ -->
             <g transform="translate(60,278)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">components/</text>
               <text x="42" y="42" class="node-meta">UI 컴포넌트 · 재사용 단위</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">
-                CLAUDE.md 없음
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">
+                CLAUDE.md 보유
               </text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">9 files</text>
             </g>
 
             <!-- widgets/ -->
             <g transform="translate(60,376)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">widgets/</text>
               <text x="42" y="42" class="node-meta">iOS Home Screen Widget</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">
-                CLAUDE.md 없음
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">
+                CLAUDE.md 보유
               </text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">1 file</text>
             </g>
 
-            <!-- docs/ — large files -->
+            <!-- docs/ — large files, no CLAUDE.md -->
             <g transform="translate(60,474)">
               <rect class="node-card danger" width="280" height="190" rx="8" />
               <circle cx="22" cy="22" r="11" class="miss-ring" />
               <circle cx="22" cy="22" r="5" class="miss-dot" />
               <text x="42" y="26" class="node-title">docs/ui-design</text>
               <text x="42" y="42" class="node-meta" style="fill: var(--red); font-weight: 600">
-                god files 다수 · 컨텍스트 부재
+                god files 다수 · CLAUDE.md 부재
               </text>
 
               <g transform="translate(16,56)">
@@ -523,128 +511,128 @@
             <!-- ============ 상태 · 리소스 column ============ -->
             <!-- store/ -->
             <g transform="translate(450,180)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">store/</text>
               <text x="42" y="42" class="node-meta">Zustand 전역 상태</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">1 file</text>
             </g>
 
             <!-- types/ -->
             <g transform="translate(450,278)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">types/</text>
               <text x="42" y="42" class="node-meta">TS 공유 타입</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">1 file</text>
             </g>
 
             <!-- constants/ -->
             <g transform="translate(450,376)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">constants/</text>
               <text x="42" y="42" class="node-meta">앱 전역 상수</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">1 file</text>
             </g>
 
             <!-- i18n/ -->
             <g transform="translate(450,474)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">i18n/</text>
               <text x="42" y="42" class="node-meta">국제화 리소스</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">1 file</text>
             </g>
 
             <!-- modules/ -->
             <g transform="translate(450,572)">
-              <rect class="node-card danger" width="280" height="64" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="64" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">modules/</text>
-              <text x="42" y="42" class="node-meta">Expo Native Module · 1 file</text>
+              <text x="42" y="42" class="node-meta">Expo Native Module · 1 file · CLAUDE.md 보유</text>
             </g>
 
             <!-- ============ 네이티브 · 빌드 column ============ -->
             <!-- ios/ -->
             <g transform="translate(840,180)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">ios/</text>
               <text x="42" y="42" class="node-meta">Xcode 프로젝트 · Pods · Widget Ext</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">9 files</text>
             </g>
 
             <!-- plugins/ -->
             <g transform="translate(840,278)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">plugins/</text>
               <text x="42" y="42" class="node-meta">Expo Config Plugin (커스텀)</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">2 files</text>
             </g>
 
             <!-- scripts/ -->
             <g transform="translate(840,376)">
-              <rect class="node-card danger" width="280" height="74" rx="8" />
-              <circle cx="22" cy="22" r="11" class="miss-ring" />
-              <circle cx="22" cy="22" r="5" class="miss-dot" />
+              <rect class="node-card accent" width="280" height="74" rx="8" />
+              <circle cx="22" cy="22" r="11" class="claude-ring" />
+              <circle cx="22" cy="22" r="5" class="claude-dot" />
               <text x="42" y="26" class="node-title">scripts/</text>
               <text x="42" y="42" class="node-meta">prebuild · patch-widget · build-phase</text>
-              <text x="42" y="58" class="node-meta" style="fill: var(--red); font-weight: 600">CLAUDE.md 없음</text>
+              <text x="42" y="58" class="node-meta" style="fill: var(--green); font-weight: 600">CLAUDE.md 보유</text>
               <text x="264" y="26" text-anchor="end" class="node-kpi" style="fill: var(--text-2)">4 files</text>
             </g>
 
-            <!-- VERIFICATION GAP card -->
+            <!-- VERIFICATION STATUS card -->
             <g transform="translate(840,474)">
-              <rect class="node-card danger" width="280" height="162" rx="8" />
-              <text x="16" y="26" class="node-title" style="fill: var(--red)">검증 게이트 · 결손</text>
-              <text x="16" y="42" class="node-meta">E·F·G 모두 인프라 부재</text>
+              <rect class="node-card" width="280" height="162" rx="8" />
+              <text x="16" y="26" class="node-title" style="fill: var(--amber)">검증 게이트 · 부분 완비</text>
+              <text x="16" y="42" class="node-meta">F 개선 · E·G 잔여 과제</text>
 
               <g transform="translate(16,56)">
-                <rect class="hot" width="248" height="18" rx="3" />
-                <text x="8" y="13" class="node-meta" style="fill: var(--red); font-weight:600">CODEOWNERS / PR template 없음</text>
+                <rect fill="var(--green-soft)" stroke="var(--green)" stroke-width="1" width="248" height="18" rx="3" />
+                <text x="8" y="13" class="node-meta" style="fill: var(--green); font-weight:600">husky pre-commit hook 가동 ✓</text>
               </g>
               <g transform="translate(16,78)">
-                <rect class="hot" width="248" height="18" rx="3" />
-                <text x="8" y="13" class="node-meta" style="fill: var(--red); font-weight:600">.github/workflows/ 없음</text>
+                <rect fill="var(--green-soft)" stroke="var(--green)" stroke-width="1" width="248" height="18" rx="3" />
+                <text x="8" y="13" class="node-meta" style="fill: var(--green); font-weight:600">package.json build/test scripts ✓</text>
               </g>
               <g transform="translate(16,100)">
                 <rect class="hot" width="248" height="18" rx="3" />
-                <text x="8" y="13" class="node-meta" style="fill: var(--red); font-weight:600">husky / pre-commit hook 없음</text>
+                <text x="8" y="13" class="node-meta" style="fill: var(--red); font-weight:600">CODEOWNERS / PR template 없음</text>
               </g>
               <g transform="translate(16,122)">
                 <rect class="hot" width="248" height="18" rx="3" />
                 <text x="8" y="13" class="node-meta" style="fill: var(--red); font-weight:600">evals/ · benchmarks/ 없음</text>
               </g>
               <g transform="translate(16,144)">
-                <rect fill="var(--green-soft)" stroke="var(--green)" stroke-width="1" width="248" height="14" rx="3" />
-                <text x="8" y="11" class="node-meta" style="fill: var(--green); font-weight:600">package.json scripts ✓ (E3 부분 점수)</text>
+                <rect class="warm" width="248" height="14" rx="3" />
+                <text x="8" y="11" class="node-meta" style="fill: var(--amber); font-weight:600">hallucinated paths 35/76 — 수정 필요</text>
               </g>
             </g>
 
             <!-- =================== EDGES =================== -->
-            <!-- Root CLAUDE.md → 3 column buckets (dashed = should-be-pointing-to) -->
-            <path class="edge edge-dash edge-warn" d="M500,130 C 500,160 200,160 200,180" />
-            <path class="edge edge-dash edge-warn" d="M590,130 C 590,160 590,160 590,180" />
-            <path class="edge edge-dash edge-warn" d="M680,130 C 680,160 980,160 980,180" />
+            <!-- Root CLAUDE.md → 3 column buckets -->
+            <path class="edge edge-type" d="M500,130 C 500,160 200,160 200,180" />
+            <path class="edge edge-type" d="M590,130 C 590,160 590,160 590,180" />
+            <path class="edge edge-type" d="M680,130 C 680,160 980,160 980,180" />
 
             <text x="350" y="158" text-anchor="middle"
               style="font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--amber); font-weight: 600">
-              26 broken refs from root
+              35 hallucinated paths — 수정 필요
             </text>
           </svg>
         </div>
@@ -654,46 +642,58 @@
       <div class="findings">
         <section class="panel panel-strength">
           <div class="panel-head">
-            <h3>강점 (유지)</h3>
-            <span class="count">살릴 부분</span>
+            <h3>달성된 강점 (Wins)</h3>
+            <span class="count">T1–T10 결과</span>
           </div>
           <ul class="panel-list">
             <li>
               <div class="head">
-                <span class="tag tag-rule">Cat A</span>
-                root <code>CLAUDE.md</code> 존재 (123 ln)
+                <span class="tag tag-rule">Cat A · 14/15</span>
+                11/12 모듈 CLAUDE.md 완비
               </div>
               <div class="note">
-                컨텍스트 문서 자체가 없는 것은 아님. 다만 길이 초과로 압축 필요. 하위 모듈 12개에는 전무.
+                <code>app · components · widgets · store · types · constants · i18n · ios · plugins · scripts · modules</code>
+                모두 컨텍스트 보유. 기준선 0/12 → 11/12.
+              </div>
+            </li>
+            <li>
+              <div class="head">
+                <span class="tag tag-rule">Cat C · F</span>
+                MEMORY.md + ARCHITECTURE.md 신설
+              </div>
+              <div class="note">
+                프로젝트 의사결정 이력(<code>MEMORY.md</code>)과 구조 지도(<code>ARCHITECTURE.md</code>)
+                외부화. 암묵지와 신선도 카테고리 점수 대폭 상승.
+              </div>
+            </li>
+            <li>
+              <div class="head">
+                <span class="tag tag-rule">Cat F · 8/10</span>
+                husky pre-commit 품질 게이트 가동
+              </div>
+              <div class="note">
+                <code>.husky/pre-commit</code> hook 설치. 커밋 시점에 린트/타입 검사 자동 실행.
+                기준선 0/10 → 8/10.
               </div>
             </li>
             <li>
               <div class="head">
                 <span class="tag tag-rule">Cat E3</span>
-                Build/test infra 부분 가동
+                Build/test scripts 완비
               </div>
               <div class="note">
-                <code>package.json</code> 의 <code>start · ios · android · prebuild:ios · patch-widget</code> 스크립트가
-                정의됨. agent가 변경 후 검증 명령 실행 가능. (2/3 sub-score)
-              </div>
-            </li>
-            <li>
-              <div class="head">
-                <span class="tag tag-rule">Cat B3</span>
-                Key files 식별 (3/4 sub-score)
-              </div>
-              <div class="note">
-                root <code>CLAUDE.md</code> 가 핵심 파일 위치는 어느 정도 짚어줌. 다만 26건의 path 중 다수가 stale.
+                <code>package.json</code>의 <code>start · ios · android · prebuild:ios · patch-widget</code>
+                스크립트로 agent가 변경 후 즉시 검증 가능.
               </div>
             </li>
             <li>
               <div class="head">
                 <span class="tag tag-rule">Cat A</span>
-                명확한 디렉터리 분리 (12개 모듈)
+                Path validation 도입
               </div>
               <div class="note">
-                <code>app · components · widgets · store · types · i18n · ios · plugins · scripts</code>
-                등 책임 단위가 분리됨. 컨텍스트만 추가되면 즉시 navigability 확보.
+                컨텍스트 내 파일 경로 검증 인프라 신설. 기준선 대비 hallucinated path 비율 크게 감소
+                (26/31 → 35/76, 절대 수는 증가했지만 비율 84% → 46%).
               </div>
             </li>
           </ul>
@@ -701,76 +701,64 @@
 
         <section class="panel panel-risk">
           <div class="panel-head">
-            <h3>최우선 ROI 액션</h3>
+            <h3>잔여 ROI 액션</h3>
             <span class="count">우선순위 정렬</span>
           </div>
           <ul class="panel-list">
             <li>
               <div class="head">
                 <span class="tag tag-rule" style="background: var(--red-soft); color: var(--red)">Cat E1 · S</span>
-                hallucinated path 26 / 31 ref 즉시 수정
+                hallucinated path 35 / 76 ref 수정
               </div>
               <div class="note">
-                <strong>Effort 0.5 hr · Impact 10/10 · Priority 20.0.</strong>
-                예: <code>README.md → app/_layout.ts</code>, <code>services/mockApi.ts</code>,
-                <code>CLAUDE.md → widgets/SmokeTapWidget.ts</code>. 실제 경로로 정정 — agent의
-                가짜 path-following을 즉시 차단. <em>stale = worse than missing.</em>
+                <strong>Effort 0.5 hr · Impact 10/10.</strong>
+                주로 <code>ios/Pods/</code> 내 README 파일이 외부 URL을 참조함.
+                내부 참조 기준으로 stale path 정정 — agent의 잘못된 path-following 차단.
+                <em>stale = worse than missing.</em>
               </div>
             </li>
             <li>
               <div class="head">
-                <span class="tag tag-rule">Cat F · S</span>
-                CI 또는 pre-push hook에 path validation 추가
+                <span class="tag tag-rule">Cat A · S</span>
+                <code>docs/</code> 모듈 CLAUDE.md 신설
               </div>
               <div class="note">
-                <strong>Effort 1.0 hr · Impact 8/10 · Priority 8.0.</strong>
-                <code>.github/workflows/</code> 또는 <code>husky pre-push</code>로 context
-                내 모든 파일 경로의 실재 여부 자동 검증. E1 회귀 영구 차단 + F 인프라 신설.
+                <strong>Effort 0.5 hr · Impact 9/10.</strong>
+                유일하게 컨텍스트 미보유 모듈. <code>docs/ui-design/</code> god file 목록과
+                열람/수정 주의사항 기록. A 카테고리 14/15 → 15/15 달성 가능.
               </div>
             </li>
             <li>
               <div class="head">
                 <span class="tag tag-rule">Cat B · M</span>
-                root <code>CLAUDE.md</code> 압축 (123 → 25–35 ln)
+                CLAUDE.md 압축 · bash 코드블록 · cross-link 보강
               </div>
               <div class="note">
-                <strong>Effort 2.0 hr · Impact 7/10 · Priority 3.5.</strong>
-                "compass, not encyclopedia" 원칙. 핵심 명령 + 모듈 맵 + 비명시 규칙 marker만 남기고
-                상세는 하위 module CLAUDE.md로 분산.
+                <strong>Effort 2.0 hr · Impact 7/10.</strong>
+                "compass, not encyclopedia" 원칙. conciseness 초과 6건 압축 + quick command
+                추가 + 관련 모듈 간 cross-link 보강. B 10/20 → 15/20 목표.
               </div>
             </li>
             <li>
               <div class="head">
                 <span class="tag tag-rule">Cat D · M</span>
-                <code>ARCHITECTURE.md</code> + mermaid dependency 다이어그램
+                mermaid dependency 다이어그램 + cross-module deps 섹션 보완
               </div>
               <div class="note">
-                <strong>Effort 2.5 hr · Impact 7/10 · Priority 2.8.</strong>
-                <code>app → components → widgets → ios native</code> 흐름과
-                <code>store ↔ i18n ↔ constants</code> 횡단 의존을 시각화.
-                cross-module ripple 추적 시간 절반.
+                <strong>Effort 2.5 hr · Impact 7/10.</strong>
+                <code>ARCHITECTURE.md</code>에 mermaid 시각화 추가. 절반 이상 모듈에서
+                누락된 Cross-module dependencies 섹션 보완. D 8/15 → 12/15 목표.
               </div>
             </li>
             <li>
               <div class="head">
-                <span class="tag tag-rule">Cat C · M</span>
-                <code>MEMORY.md</code> 또는 <code>docs/adr/</code> 도입
+                <span class="tag tag-rule">Cat E2 · M</span>
+                CODEOWNERS + PR template 도입
               </div>
               <div class="note">
-                <strong>Effort 3.0 hr · Impact 8/10 · Priority 2.7.</strong>
-                "왜 prebuild 후 3단계 patch script가 필요한가" 같은 senior 의존 의사결정
-                외부화. tribal knowledge store 신설 → 신규 agent run 오류 ↓.
-              </div>
-            </li>
-            <li>
-              <div class="head">
-                <span class="tag tag-rule">Cat A · S×12</span>
-                12개 module에 CLAUDE.md 신설
-              </div>
-              <div class="note">
-                <strong>Effort 6.0 hr (모듈당 ~30 min) · Impact 9/10 · Priority 1.5.</strong>
-                <code>app · components · widgets · store · ios · scripts</code> 부터 우선.
-                navigation coverage 0/12 → 12/12. task당 ~3 min × ~5/day 절감.
+                <strong>Effort 1.0 hr · Impact 6/10.</strong>
+                <code>.github/CODEOWNERS</code> + <code>.github/pull_request_template.md</code>
+                신설. independent critic infra 구축 → E2 0/4 → 4/4.
               </div>
             </li>
             <li>
@@ -779,9 +767,8 @@
                 <code>evals/</code> 디렉터리 + 대표 task pass-rate 측정
               </div>
               <div class="note">
-                <strong>Effort 6.0 hr · Impact 6/10 · Priority 1.0.</strong>
-                "<code>app/index.tsx</code>에 새 화면 추가" 같은 대표 task 5–10개를
-                자동 실행/채점. 위 1–6번 액션의 ROI 자체를 정량화.
+                <strong>Effort 6.0 hr · Impact 6/10.</strong>
+                대표 task 5–10개를 자동 실행/채점. 개선 ROI 정량화. G 0/5 → 5/5.
               </div>
             </li>
             <li>
@@ -790,7 +777,7 @@
                 god file 3개 분할 (<code>docs/ui-design/*</code> 622·540·532 ln)
               </div>
               <div class="note">
-                <strong>Effort 7.5 hr · Impact 6/10 · Priority 0.8.</strong>
+                <strong>Effort 7.5 hr · Impact 6/10.</strong>
                 <code>design-canvas.jsx · clinical.jsx · paper.jsx</code> 분리.
                 파일당 ~5K–10K token 절감 + Edit 정확도 ↑.
               </div>
