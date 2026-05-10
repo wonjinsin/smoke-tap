@@ -1,0 +1,51 @@
+{
+  "appName": "SMOKE TAP",
+  "tabs": {
+    "main": "오늘",
+    "stats": "통계",
+    "settings": "설정"
+  },
+  "main": {
+    "today": "오늘",
+    "lastTap": "마지막 기록 {{time}}",
+    "noTapYet": "아직 기록 없음"
+  },
+  "home": {
+    "hourly": "시간대별",
+    "hourlyRange": "00 — 24"
+  },
+  "toast": {
+    "added": "+1 기록됨",
+    "undo": "되돌리기"
+  },
+  "stats": {
+    "title": "통계",
+    "observe": "관찰",
+    "day": "일",
+    "week": "주",
+    "month": "월",
+    "totalThis": "이번 {{range}} 합계",
+    "recent": "최근 기록"
+  },
+  "settings": {
+    "title": "설정",
+    "section": {
+      "records": "기록",
+      "data": "데이터",
+      "app": "앱"
+    },
+    "shakeUndo": "실수 방지 — 흔들어 되돌리기",
+    "haptic": "햅틱 피드백",
+    "iCloud": "iCloud 동기화",
+    "iCloudOff": "꺼짐",
+    "startDate": "기록 시작일",
+    "noStartDate": "—",
+    "exportCsv": "CSV로 내보내기",
+    "appVersion": "버전",
+    "appIcon": "앱 아이콘",
+    "appIconDefault": "기본",
+    "appearance": "모양",
+    "appearanceAuto": "자동",
+    "tagline": "Smoke Tap은 목표를 설정하지 않습니다\n숫자는 그저 숫자입니다"
+  }
+}

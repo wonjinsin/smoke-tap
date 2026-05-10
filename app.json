@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Smoke Tap",
+    "slug": "smoke-tap",
+    "scheme": "smoke-tap",
+    "version": "1.0.0",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "platforms": [
+      "ios"
+    ],
+    "plugins": [
+      "expo-router",
+      "./plugins/withRemovePushNotifications",
+      [
+        "expo-widgets",
+        {
+          "enablePushNotifications": false,
+          "widgets": [
+            {
+              "name": "SmokeTapWidget",
+              "displayName": "Smoke Tap",
+              "description": "오늘 흡연 횟수를 기록하세요",
+              "supportedFamilies": ["systemSmall"]
+            }
+          ]
+        }
+      ],
+      "./plugins/withSharedTapStore"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.example.smoketap"
+    }
+  }
+}
