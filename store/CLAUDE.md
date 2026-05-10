@@ -1,3 +1,24 @@
 # store/CLAUDE.md
 
-WIP — populated in plan task 6/7/8.
+Zustand v5 + persist (AsyncStorage). Single source of truth for tap records.
+
+## Files
+
+<!-- skip-validate-next -->
+- `useTapStore.ts` — store definition with `records: TapRecord[]` plus actions and selectors
+
+## Patterns
+
+- All statistics derive from `records` via selectors (`getTodayCount`, `getDailyStats`, `getWeeklyStats`). Do not add parallel counters or caches.
+- New persisted fields require a migration consideration — Zustand's `persist` versions are key.
+- Actions: `addTap()`, `removeTap()`, `clearPending()`, `setBaseCount()` — keep them small and synchronous.
+
+## Touch points
+
+- `types/tap.ts` — `TapRecord`, `DailyStat`, `WeeklySummary`.
+- `modules/SharedTapStore.ts` — pendingTaps absorption flows back into `addTap`.
+- `app/_layout.tsx` — subscribes via `useTapStore.subscribe` to push base count to the widget.
+
+## Gotchas
+
+- Date selectors compare as `YYYY-MM-DD` in **device local timezone**, not UTC. Follow the existing `toLocalDateString` pattern.
