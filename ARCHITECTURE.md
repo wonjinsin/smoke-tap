@@ -69,7 +69,7 @@ sequenceDiagram
 
 ## Swift code generation surface
 
-Three Swift code paths land in `ios/` at prebuild time:
+Four Swift code paths land in `ios/` at prebuild time:
 
 <!-- skip-validate-next -->
 | Output | Source | Trigger |
