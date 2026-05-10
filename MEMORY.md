@@ -26,13 +26,13 @@ Non-obvious rules, decisions, and constraints. Each entry: **Rule**, **Why** (mo
 
 ---
 
-## App Group ID is duplicated in three configs
+## App Group ID is hardcoded in two source files
 
-**Rule:** `group.com.example.smoketap` appears in `app.json`, `plugins/withSharedTapStore.js`, and `scripts/patch-widget.js`. All three must change together.
+**Rule:** `group.com.example.smoketap` is hardcoded in `plugins/withSharedTapStore.js` and `scripts/patch-widget.js`. Both must change together. iOS entitlements / Info.plist under `ios/` are prebuild outputs — do not edit them by hand. Note that `app.json` only carries the bundle identifier `com.example.smoketap`, NOT the App Group ID.
 
-**Why:** Each file feeds a different stage of the build (Expo config / prebuild plugin / post-prebuild patch). There is no single source — the duplication is intentional to keep each stage independent.
+**Why:** Each file feeds a different stage of the build (prebuild plugin writes the main-app side, post-prebuild patch writes the widget side). There is no shared constants module in JS land, so the value is duplicated to keep each stage self-contained.
 
-**How to apply:** Renaming the App Group requires `grep -r "group.com.example.smoketap"` and editing every hit.
+**How to apply:** Renaming the App Group requires `grep -rn "group.com.example.smoketap" plugins scripts` and editing every hit, then `npm run prebuild:ios` to regenerate `ios/`.
 
 ---
 
