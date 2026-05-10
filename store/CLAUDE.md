@@ -11,7 +11,7 @@ Zustand v5 + persist (AsyncStorage). Single source of truth for tap records.
 
 - All statistics derive from `records` via selectors (`getTodayCount`, `getDailyStats`, `getWeeklyStats`). Do not add parallel counters or caches.
 - New persisted fields require a migration consideration — Zustand's `persist` versions are key.
-- Actions: `addTap()`, `removeTap()`, `clearPending()`, `setBaseCount()` — keep them small and synchronous.
+- Actions: `addTap()`, `removeLastTap()` — keep them small and synchronous. Widget-sync helpers (`clearPending`, `setBaseCount`) live in `modules/SharedTapStore.ts`, not in the store.
 
 ## Touch points
 

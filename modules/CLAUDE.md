@@ -5,7 +5,7 @@ JavaScript wrapper for the `SharedTapStore` Expo Module (Swift-implemented). Exp
 ## Files
 
 <!-- skip-validate-next -->
-- `SharedTapStore.ts` — typed JS interface (`getPendingTaps`, `clearPending`, `setBaseCount`, `getBaseCount`)
+- `SharedTapStore.ts` — typed JS interface (`getPendingCount`, `clearPending`, `setBaseCount`)
 
 ## Patterns
 
