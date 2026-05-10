@@ -1,120 +1,120 @@
 # CLAUDE.md
 
-이 파일은 Claude Code가 본 저장소에서 작업할 때 참고하는 가이드입니다.
+This file is a reference guide for Claude Code when working in this repository.
 
-## 프로젝트 개요
+## Project Overview
 
-**Smoke Tap** — 흡연 횟수를 가볍게 한 번의 탭으로 기록하는 iOS 전용 앱.
+**Smoke Tap** — An iOS-only app for logging smoking sessions with a single light tap.
 
-- 사용자는 판단 없이 자기 습관을 객관적으로 추적하려는 사람.
-- 탭 한 번 = 기록 한 번. 마찰을 최대한 줄이는 것이 핵심.
-- 홈 화면 위젯에서도 탭 하나로 기록 가능. 위젯과 앱은 App Groups로 동기화됨.
+- Target users are people who want to objectively track their own habits without judgment.
+- One tap = one record. Minimizing friction is the core design principle.
+- Recording is also possible with a single tap from the home screen widget. The widget and app sync via App Groups.
 
-## 기술 스택
+## Tech Stack
 
-- **런타임**: Expo SDK 55, React Native 0.83, React 19.2
-- **라우팅**: Expo Router (`app/` 파일 기반, typed routes 활성화)
-- **언어**: TypeScript strict mode
-- **스타일링**: NativeWind v4 + 일부 화면은 `StyleSheet`(디자인 토큰 기반)
-- **상태**: Zustand v5 + `persist` (AsyncStorage)
-- **데이터**: TanStack Query v5 (현재는 미사용 — 추후 서버 연동 대비)
-- **i18n**: 자체 구현, `i18n/locales/ko.json` (현재 ko만 존재)
-- **위젯**: `expo-widgets` + 직접 작성한 Swift (App Intents) — iOS 17+
-- **네이티브 브릿지**: 자체 Expo Module `SharedTapStore`
+- **Runtime**: Expo SDK 55, React Native 0.83, React 19.2
+- **Routing**: Expo Router (`app/` file-based, typed routes enabled)
+- **Language**: TypeScript strict mode
+- **Styling**: NativeWind v4 + `StyleSheet` for some screens (design-token based)
+- **State**: Zustand v5 + `persist` (AsyncStorage)
+- **Data**: TanStack Query v5 (currently unused — reserved for future server integration)
+- **i18n**: Custom implementation, `i18n/locales/ko.json` (currently ko only)
+- **Widget**: `expo-widgets` + hand-written Swift (App Intents) — iOS 17+
+- **Native Bridge**: Custom Expo Module `SharedTapStore`
 
-## 자주 쓰는 명령어
+## Common Commands
 
-| 명령어 | 설명 |
+| Command | Description |
 |--------|------|
-| `npm run ios` | iOS 시뮬레이터 빌드/실행 |
-| `npm start` | Expo 개발 서버만 실행 |
-| `npm run prebuild:ios` | `expo prebuild --clean` 후 위젯 패치 + 빌드 페이즈 순서 보정 + ExpoModulesProvider 패치 자동 실행 |
-| `npm run patch-widget` | 위젯 Swift 파일 패치만 다시 적용 |
-| `npx tsc --noEmit` | 타입 검사 |
-| `npx expo start --clear` | Metro 캐시 초기화 후 실행 |
+| `npm run ios` | Build and run on iOS simulator |
+| `npm start` | Start Expo dev server only |
+| `npm run prebuild:ios` | Run `expo prebuild --clean`, then auto-apply widget patch + build phase reorder + ExpoModulesProvider patch |
+| `npm run patch-widget` | Re-apply widget Swift file patch only |
+| `npx tsc --noEmit` | Type check |
+| `npx expo start --clear` | Start with Metro cache cleared |
 
-## 디렉토리 구조
+## Directory Structure
 
 ```
 smoke-tap/
 ├── app/                   # Expo Router (file-based routing)
-│   ├── _layout.tsx        # Stack root + 위젯 동기화 훅
+│   ├── _layout.tsx        # Stack root + widget sync hook
 │   └── (tabs)/            # index / stats / settings
 ├── components/
-│   ├── common/            # AppHeader 등 공통 컴포넌트
-│   └── stats/             # BarChart 등 통계 전용
+│   ├── common/            # Shared components like AppHeader
+│   └── stats/             # Stats-specific components like BarChart
 ├── store/
-│   └── useTapStore.ts     # Zustand persist 스토어 (records 배열 단일 소스)
+│   └── useTapStore.ts     # Zustand persist store (single source of truth for records array)
 ├── modules/
-│   └── SharedTapStore.ts  # 위젯↔앱 브릿지 (네이티브 모듈 JS 래퍼)
+│   └── SharedTapStore.ts  # Widget↔app bridge (native module JS wrapper)
 ├── widgets/
-│   └── SmokeTapWidget.tsx # expo-widgets JSX (참고용 — 실 빌드는 Swift)
+│   └── SmokeTapWidget.tsx # expo-widgets JSX (reference only — actual build uses Swift)
 ├── plugins/
-│   ├── withSharedTapStore.js          # 메인 앱 Swift 파일 + Xcode target 등록
-│   └── withRemovePushNotifications.js # 푸시 권한/엔타이틀먼트 제거
+│   ├── withSharedTapStore.js          # Main app Swift files + Xcode target registration
+│   └── withRemovePushNotifications.js # Remove push notification permissions/entitlements
 ├── scripts/
-│   ├── patch-widget.js                  # prebuild 후 위젯 Swift 덮어쓰기
-│   ├── fix-build-phase-order.js         # SmokeTap 타깃에서 패치 페이즈를 [Expo] Configure project 뒤로 이동
-│   └── patch-expo-modules-provider.js   # 빌드 페이즈에서 ExpoModulesProvider 패치
-├── constants/colors.ts    # 디자인 토큰 (C.BG, C.ACCENT 등)
-├── i18n/                  # ko.json + t() 헬퍼
+│   ├── patch-widget.js                  # Overwrite widget Swift files after prebuild
+│   ├── fix-build-phase-order.js         # Move patch phase after [Expo] Configure project in SmokeTap target
+│   └── patch-expo-modules-provider.js   # Patch ExpoModulesProvider in build phase
+├── constants/colors.ts    # Design tokens (C.BG, C.ACCENT, etc.)
+├── i18n/                  # ko.json + t() helper
 ├── types/tap.ts           # TapRecord, DailyStat, WeeklySummary
-└── ios/                   # 생성된 Xcode 프로젝트 (커밋 대상)
+└── ios/                   # Generated Xcode project (committed to repo)
 ```
 
-## 핵심 아키텍처
+## Core Architecture
 
-### 단일 소스 — `useTapStore.records`
+### Single Source of Truth — `useTapStore.records`
 
-모든 통계는 `records: TapRecord[]`에서 파생됨. `getTodayCount`, `getDailyStats`, `getWeeklyStats`는 모두 selector. 별도 캐시/카운터를 만들지 말 것.
+All statistics are derived from `records: TapRecord[]`. `getTodayCount`, `getDailyStats`, and `getWeeklyStats` are all selectors. Do not create separate caches or counters.
 
-### 위젯 ↔ 앱 동기화
+### Widget ↔ App Sync
 
-App Groups (`group.com.example.smoketap`)의 `UserDefaults`에 두 키를 두고 양방향 동기화:
+Two keys in `UserDefaults` under App Groups (`group.com.example.smoketap`) for bidirectional sync:
 
-- `pendingTaps` (Int): 위젯에서 누른 후 앱이 아직 흡수하지 못한 횟수
-- `baseTodayCount` (Int): 앱이 알고 있는 오늘 카운트 (위젯 표시용 기준값)
+- `pendingTaps` (Int): Count of taps made from the widget that the app has not yet absorbed
+- `baseTodayCount` (Int): Today's count as known by the app (reference value for widget display)
 
-흐름:
+Flow:
 
-1. **위젯 → 앱**: 위젯 `+` 버튼 탭 → `RecordTapIntent` → `pendingTaps` 증가 + 위젯 즉시 갱신.
-2. **앱 활성화**: `app/_layout.tsx`의 `useWidgetSync()`가 `pendingTaps`만큼 `addTap()` 호출 → `clearPending()` → `setBaseCount(today)`.
-3. **앱 → 위젯**: `useTapStore.subscribe`로 records 변경 시마다 `setBaseCount(today)` 갱신 → 다음 위젯 타임라인이 새 값을 표시.
+1. **Widget → App**: Widget `+` button tap → `RecordTapIntent` → increment `pendingTaps` + immediately refresh widget.
+2. **App activation**: `useWidgetSync()` in `app/_layout.tsx` calls `addTap()` for each pending tap → `clearPending()` → `setBaseCount(today)`.
+3. **App → Widget**: On every records change via `useTapStore.subscribe`, update `setBaseCount(today)` → next widget timeline displays the new value.
 
-### Swift 코드 생성 경로
+### Swift Code Generation Path
 
-- **메인 앱 Swift**(`SharedTapStoreMainApp.swift`, `SharedTapStoreModule.swift`):
-  Config plugin `withSharedTapStore.js`가 `prebuild` 시점에 작성 + Xcode 타겟 등록.
-- **위젯 Swift**(`SharedTapStore.swift`, `RecordTapIntent.swift`, `SmokeTapWidget.swift`):
-  `expo-widgets`가 `prebuild` 단계에서 생성 파일을 덮어쓰기 때문에, **`scripts/patch-widget.js`가 prebuild 직후 다시 덮어쓰는 구조**. `npm run prebuild:ios`가 prebuild → `patch-widget.js` → `patch-expo-modules-provider.js` 세 단계를 순서대로 실행함 (마지막 단계는 Xcode Run Script Build Phase와 중복되지만 prebuild 직후 즉시 정합성을 보장하기 위한 방어적 호출).
-- **`ExpoModulesProvider.swift`**: 빌드 시 `[Expo] Configure project` 페이즈가 재생성하므로, `patch-expo-modules-provider.js`를 호출하는 Run Script Build Phase가 **반드시 그 뒤**에 와야 함. config plugin 시점에는 `[Expo] Configure project` 페이즈가 아직 pbxproj에 없어 위치를 보장할 수 없으므로, prebuild 직후 `fix-build-phase-order.js`가 SmokeTap 타깃 buildPhases 배열에서 패치 페이즈를 `[Expo] Configure project` 바로 뒤로 이동시켜 매 빌드마다 패치가 살아남도록 함.
+- **Main app Swift** (`SharedTapStoreMainApp.swift`, `SharedTapStoreModule.swift`):
+  Config plugin `withSharedTapStore.js` writes these files and registers them in the Xcode target at `prebuild` time.
+- **Widget Swift** (`SharedTapStore.swift`, `RecordTapIntent.swift`, `SmokeTapWidget.swift`):
+  Because `expo-widgets` overwrites generated files during the `prebuild` step, **`scripts/patch-widget.js` overwrites them again immediately after prebuild**. `npm run prebuild:ios` runs three steps in order: prebuild → `patch-widget.js` → `patch-expo-modules-provider.js` (the last step overlaps with the Xcode Run Script Build Phase, but it is a defensive call to ensure consistency immediately after prebuild).
+- **`ExpoModulesProvider.swift`**: The `[Expo] Configure project` phase regenerates this file on every build, so the Run Script Build Phase that calls `patch-expo-modules-provider.js` **must come after it**. Because the `[Expo] Configure project` phase does not yet exist in pbxproj at config plugin time, its position cannot be guaranteed there — so `fix-build-phase-order.js` moves the patch phase to immediately after `[Expo] Configure project` in the SmokeTap target's buildPhases array right after prebuild, ensuring the patch survives every build.
 
-## 디자인 시스템
+## Design System
 
-페이퍼 라이트 톤 + 잉크. 단일 테마(다크 모드 미지원). 핵심 토큰:
+Paper-light tone + ink. Single theme (dark mode not supported). Core tokens:
 
-- **테마**: 페이퍼 라이트 (`C.BG = #F5F2EC`, `C.CARD = #FBF9F4`)
-- **액센트 = 잉크**: `C.INK = #1A1815` 단색. 별도 컬러 액센트 없음.
-- **위계**: 숫자가 주인공. 홈 화면의 원형 디스플레이가 시각적 중심.
-- **분리 원칙**: 디스플레이(읽기)와 + 버튼(누르기)을 시각적으로 분리.
-- **장식 신중**: 시각적 충실도를 위해 시안에 명시된 UI 요소는 stub 동작이라도 표시할 수 있다. 단, 시안에 없는 요소를 임의 추가하지 말 것.
-- **그레인**: `assets/textures/paper-grain.png`(8×8 타일) — 모든 탭 화면을 `<PaperBackground>`로 감쌈.
+- **Theme**: Paper light (`C.BG = #F5F2EC`, `C.CARD = #FBF9F4`)
+- **Accent = Ink**: `C.INK = #1A1815` solid. No separate color accent.
+- **Hierarchy**: Numbers are the hero. The circular display on the home screen is the visual focal point.
+- **Separation principle**: Visually separate the display (reading) from the + button (tapping).
+- **Decoration restraint**: For visual fidelity, UI elements explicitly shown in the design spec may be rendered even with stub behavior. Do not arbitrarily add elements not in the spec.
+- **Grain**: `assets/textures/paper-grain.png` (8×8 tile) — all tab screens are wrapped with `<PaperBackground>`.
 
-색상은 항상 `C` 토큰 사용. 하드코딩 금지 (단, Swift 위젯 코드는 hex 문자열 그대로 — 토큰 동기화는 수동: `colors.ts` ↔ `scripts/patch-widget.js` ↔ `widgets/SmokeTapWidget.tsx`).
+Always use `C` tokens for colors. No hardcoding (except Swift widget code uses hex strings directly — token sync is manual: `colors.ts` ↔ `scripts/patch-widget.js` ↔ `widgets/SmokeTapWidget.tsx`).
 
-## 코드 컨벤션
+## Code Conventions
 
-- 주석·커밋·식별자는 영어. 사용자 노출 텍스트와 문서는 한국어 (`i18n/locales/ko.json`).
-- TypeScript는 strict. 타입을 좁히기 위한 `as` 캐스팅은 최소화.
-- 경로 앨리어스: `@/*` → 프로젝트 루트.
-- 새 컴포넌트는 `components/<domain>/`. 한 화면 전용이면 `app/` 안에 같이 둬도 됨.
-- 날짜는 항상 **디바이스 로컬 타임존** 기준 `YYYY-MM-DD` 문자열로 비교 (`toLocalDateString` 패턴 따름). UTC 비교 금지.
+- Comments, commits, and identifiers are in English. User-facing text and documentation are in Korean (`i18n/locales/ko.json`).
+- TypeScript is strict. Minimize `as` casting to narrow types.
+- Path alias: `@/*` → project root.
+- New components go in `components/<domain>/`. If a component is exclusive to one screen, it can live inside `app/` alongside it.
+- Dates are always compared as `YYYY-MM-DD` strings using the **device local timezone** (following the `toLocalDateString` pattern). No UTC comparisons.
 
-## 주의사항
+## Important Notes
 
-- **위젯 수정 시**: `widgets/SmokeTapWidget.tsx`(JSX 참고용)와 `scripts/patch-widget.js` 안의 Swift 문자열(`SMOKE_TAP_WIDGET`)을 **함께** 수정해야 함. 실제 빌드는 Swift 쪽이 정답.
-- **App Group ID**: `com.example.smoketap`은 `app.json`, `withSharedTapStore.js`, `patch-widget.js` 세 곳에 흩뿌려져 있음. 변경 시 모두 동기화.
-- **NativeWind v4**: `metro.config.js`의 `withNativeWind` 래핑과 `app/_layout.tsx`의 `import '../global.css'` 필수.
-- **Push Notifications**: `withRemovePushNotifications` 플러그인이 의도적으로 제거함. 다시 활성화하려면 플러그인 수정.
-- **iOS 전용**: `app.json`의 `platforms: ["ios"]`. Android 빌드는 지원 대상이 아님.
-- **iOS 17+ 의존**: 위젯의 인터랙티브 버튼은 App Intents가 필요. iOS 17 이상에서만 동작.
+- **When modifying the widget**: `widgets/SmokeTapWidget.tsx` (JSX reference) and the Swift string (`SMOKE_TAP_WIDGET`) inside `scripts/patch-widget.js` must **both** be updated. The Swift side is the authoritative source for actual builds.
+- **App Group ID**: `com.example.smoketap` is scattered across three places: `app.json`, `withSharedTapStore.js`, and `patch-widget.js`. Sync all three when changing it.
+- **NativeWind v4**: The `withNativeWind` wrapper in `metro.config.js` and `import '../global.css'` in `app/_layout.tsx` are required.
+- **Push Notifications**: The `withRemovePushNotifications` plugin intentionally removes them. To re-enable, modify the plugin.
+- **iOS only**: `platforms: ["ios"]` in `app.json`. Android builds are not supported.
+- **iOS 17+ dependency**: Interactive widget buttons require App Intents. Works on iOS 17 and above only.
