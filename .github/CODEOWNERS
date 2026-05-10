@@ -1,0 +1,15 @@
+# Default owner for everything in the repo.
+*                                   @wonjinsin
+
+# Native build surface — extra care, prebuild side-effects.
+/ios/                               @wonjinsin
+/plugins/                           @wonjinsin
+/scripts/                           @wonjinsin
+/widgets/                           @wonjinsin
+
+# Context docs — keep them honest with the code.
+CLAUDE.md                           @wonjinsin
+ARCHITECTURE.md                     @wonjinsin
+MEMORY.md                           @wonjinsin
+README.md                           @wonjinsin
+**/CLAUDE.md                        @wonjinsin

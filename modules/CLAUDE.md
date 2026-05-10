@@ -12,11 +12,12 @@ JavaScript wrapper for the `SharedTapStore` Expo Module (Swift-implemented). Exp
 - This module wraps a native Swift module produced by `plugins/withSharedTapStore.js` at prebuild time.
 - API stays intentionally small: read/clear pending counter, write base today count. No business logic here.
 
-## Touch points
+## Cross-module deps
 
-- `plugins/withSharedTapStore.js` — generates the Swift counterpart.
-- `store/useTapStore.ts` — caller during widget sync.
-- `app/_layout.tsx` — invokes `useWidgetSync` which uses these methods.
+- **Depends on:** `plugins/withSharedTapStore.js` (generates the Swift counterpart at prebuild), `ios/` (native Swift module lives there after prebuild).
+- **Depended by:**
+  - `store/useTapStore.ts` — caller during widget sync (pendingTaps absorption).
+  - `app/_layout.tsx` — invokes `useWidgetSync` which uses these methods.
 
 ## Gotchas
 

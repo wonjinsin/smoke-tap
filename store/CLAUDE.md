@@ -13,11 +13,14 @@ Zustand v5 + persist (AsyncStorage). Single source of truth for tap records.
 - New persisted fields require a migration consideration — Zustand's `persist` versions are key.
 - Actions: `addTap()`, `removeLastTap()` — keep them small and synchronous. Widget-sync helpers (`clearPending`, `setBaseCount`) live in `modules/SharedTapStore.ts`, not in the store.
 
-## Touch points
+## Cross-module deps
 
-- `types/tap.ts` — `TapRecord`, `DailyStat`, `WeeklySummary`.
-- `modules/SharedTapStore.ts` — pendingTaps absorption flows back into `addTap`.
-- `app/_layout.tsx` — subscribes via `useTapStore.subscribe` to push base count to the widget.
+- **Depends on:** `types/tap.ts` (`TapRecord`, `DailyStat`, `WeeklySummary`).
+- **Depended by:**
+  - `app/_layout.tsx` — subscribes via `useTapStore.subscribe` to push base count to the widget.
+  <!-- skip-validate-next -->
+  - `components/home/*`, `components/stats/*` — read selectors.
+  - `modules/SharedTapStore.ts` — pendingTaps absorption flows back into `addTap`.
 
 ## Gotchas
 

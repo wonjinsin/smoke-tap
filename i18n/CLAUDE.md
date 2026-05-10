@@ -11,4 +11,11 @@ Custom i18n implementation. Currently Korean only.
 
 User-facing strings must always go through `t()`. App-internal labels (debug logs, error messages for developers) stay English.
 
-→ Loaded by screens in `app/CLAUDE.md`.
+## Cross-module deps
+
+- **Depends on:** none (leaf).
+- **Depended by:**
+  <!-- skip-validate-next -->
+  - `app/**` — screens calling `t(key)` for user-facing strings.
+  <!-- skip-validate-next -->
+  - `components/**` — domain UI labels.

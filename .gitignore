@@ -35,3 +35,6 @@ expo-env.d.ts
 
 # TypeScript cache
 *.tsbuildinfo
+
+docs/harness-flow
+docs/analyze

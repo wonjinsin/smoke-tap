@@ -9,4 +9,12 @@ Design tokens and global constants.
 
 All colors used in the app must be sourced from `C`. The widget side keeps a parallel hex copy in `scripts/patch-widget.js` — see `MEMORY.md` "Widget Swift token sync".
 
-→ Used by every component in `components/CLAUDE.md`.
+## Cross-module deps
+
+- **Depends on:** none (leaf).
+- **Depended by:**
+  <!-- skip-validate-next -->
+  - `components/**` — every UI component reads from `C`.
+  <!-- skip-validate-next -->
+  - `app/**` — screens that style raw views directly.
+  - `scripts/patch-widget.js` — keeps a parallel hex copy of widget colors (sync manually).

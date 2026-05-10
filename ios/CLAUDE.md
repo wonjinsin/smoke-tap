@@ -14,12 +14,15 @@ Generated Xcode project (committed to repo). Contains the main `SmokeTap` app ta
 - Treat `ios/` as a build artifact — most edits should originate from `app.json`, `plugins/`, or `scripts/`. Direct edits will be lost on `expo prebuild --clean`.
 - The `SmokeTap` target's build phases include a Run Script that calls `scripts/patch-expo-modules-provider.js`. Order matters — see `MEMORY.md`.
 
-## Touch points
+## Cross-module deps
 
-- `plugins/withSharedTapStore.js` — writes `SharedTapStoreMainApp.swift` and `SharedTapStoreModule.swift` into the main target.
-- `scripts/patch-widget.js` — overwrites widget Swift after prebuild.
-- `scripts/fix-build-phase-order.js` — reorders the patch phase to run after `[Expo] Configure project`.
-- `app.json` — App Group ID, bundle identifiers, deployment target.
+- **Depends on (writes into ios/ at build time):**
+  - `plugins/withSharedTapStore.js` — writes `SharedTapStoreMainApp.swift` and `SharedTapStoreModule.swift` into the main target.
+  - `scripts/patch-widget.js` — overwrites widget Swift after prebuild.
+  - `scripts/fix-build-phase-order.js` — reorders the patch phase to run after `[Expo] Configure project`.
+  - `scripts/patch-expo-modules-provider.js` — regenerates `ExpoModulesProvider.swift`.
+  - `app.json` — App Group ID, bundle identifiers, deployment target.
+- **Depended by:** `modules/SharedTapStore.ts` JS wrapper at runtime.
 
 ## Gotchas
 
