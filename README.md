@@ -68,13 +68,9 @@ smoke-tap/
 └── types/            # TypeScript 공유 타입
 ```
 
-상세는 [`ARCHITECTURE.md`](ARCHITECTURE.md) 참조.
-
 ## 더 읽을거리
 
 - [`CLAUDE.md`](CLAUDE.md) — 에이전트/코드 작성용 컴파스
-- [`ARCHITECTURE.md`](ARCHITECTURE.md) — 모듈 의존도 + 데이터 흐름
-- [`MEMORY.md`](MEMORY.md) — 비명시 결정과 그 이유
 
 ## 플랫폼 / 버전
 

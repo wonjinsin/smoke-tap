@@ -12,7 +12,7 @@ Generated Xcode project (committed to repo). Contains the main `SmokeTap` app ta
 ## Patterns
 
 - Treat `ios/` as a build artifact — most edits should originate from `app.json`, `plugins/`, or `scripts/`. Direct edits will be lost on `expo prebuild --clean`.
-- The `SmokeTap` target's build phases include a Run Script that calls `scripts/patch-expo-modules-provider.js`. Order matters — see `MEMORY.md`.
+- The `SmokeTap` target's build phases include a Run Script that calls `scripts/patch-expo-modules-provider.js`. It must run **after** `[Expo] Configure project` — otherwise `ExpoModulesProvider.swift` doesn't exist yet when the patch script tries to rewrite it. `scripts/fix-build-phase-order.js` enforces this order.
 
 ## Cross-module deps
 

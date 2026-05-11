@@ -38,3 +38,6 @@ expo-env.d.ts
 
 docs/harness-flow
 docs/analyze
+
+# Claude Code local settings (personal, not shared)
+.claude/settings.local.json
