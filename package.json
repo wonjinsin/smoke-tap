@@ -9,9 +9,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "prebuild:ios": "expo prebuild --platform ios --clean && node scripts/patch-widget.js && node scripts/fix-build-phase-order.js && node scripts/patch-expo-modules-provider.js",
-    "patch-widget": "node scripts/patch-widget.js",
-    "validate:context": "node scripts/validate-context-paths.js",
-    "prepare": "husky"
+    "patch-widget": "node scripts/patch-widget.js"
   },
   "keywords": [],
   "author": "",
@@ -43,7 +41,6 @@
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
-    "husky": "^9.1.7",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.9.3"
   }
