@@ -174,8 +174,6 @@ module.exports = function withSharedTapStore(config) {
   // 2. Register new Swift files in the Xcode project
   config = withXcodeProject(config, (config) => {
     const proj = config.modResults;
-    const projectRoot = config.modRequest.projectRoot;
-    const iosDir = path.join(projectRoot, 'ios');
 
     // Avoid duplicate entries on repeated prebuild runs
     const alreadyAdded = Object.values(proj.pbxBuildFileSection()).some(
@@ -192,10 +190,10 @@ module.exports = function withSharedTapStore(config) {
       if (name === APP_TARGET)    appKey    = uuid;
     });
 
-    // Add a Swift file to the given target by directly editing pbxproj sections
+    // Add a Swift file to the given target by directly editing pbxproj sections.
+    // relPath is relative to ios/ (SOURCE_ROOT) so the pbxproj stays portable.
     function addSwiftFile(relPath, targetKey) {
-      const absPath = path.join(iosDir, relPath);
-      const fileName = path.basename(absPath);
+      const fileName = path.basename(relPath);
       const fileRefUuid  = proj.generateUuid();
       const buildFileUuid = proj.generateUuid();
 
@@ -206,8 +204,8 @@ module.exports = function withSharedTapStore(config) {
         includeInIndex: 0,
         lastKnownFileType: 'sourcecode.swift',
         name: `"${fileName}"`,
-        path: `"${absPath}"`,
-        sourceTree: '"<group>"',
+        path: `"${relPath}"`,
+        sourceTree: 'SOURCE_ROOT',
       };
       fileRefs[`${fileRefUuid}_comment`] = fileName;
 

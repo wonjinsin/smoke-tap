@@ -205,7 +205,7 @@ if (alreadyAdded) {
   }
 
   function addSwiftFile(fileName) {
-    const absPath = path.join(WIDGET_DIR, fileName);
+    const relPath = `${WIDGET_TARGET}/${fileName}`;
     const fileRefUuid   = proj.generateUuid();
     const buildFileUuid = proj.generateUuid();
 
@@ -216,8 +216,8 @@ if (alreadyAdded) {
       includeInIndex: 0,
       lastKnownFileType: 'sourcecode.swift',
       name: `"${fileName}"`,
-      path: `"${absPath}"`,
-      sourceTree: '"<group>"',
+      path: `"${relPath}"`,
+      sourceTree: 'SOURCE_ROOT',
     };
     fileRefs[`${fileRefUuid}_comment`] = fileName;
 
