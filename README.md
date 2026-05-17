@@ -36,6 +36,7 @@ Designed to minimize friction. Open the app and tap the big button once, or tap 
 - **Local-first** — All data is stored on-device in `AsyncStorage`. No accounts, no server.
 - **Minimal paper-texture UI** — Paper background texture with an ink color palette.
 - **Stats** — Daily/weekly/monthly charts plus an hourly mini-graph.
+- **Localization-ready** — System-locale aware via `expo-localization`. Ships with Korean (`ko`); add a new locale by dropping a JSON file in `i18n/locales/`.
 - **No goals** — Smoke Tap does not set goals for you.
 
 ## ✦ Tech Stack
@@ -98,7 +99,7 @@ smoke-tap/
 ├── plugins/          Expo config plugins
 ├── scripts/          Post-prebuild patch scripts
 ├── constants/        Design tokens (colors.ts)
-├── i18n/             Korean locale
+├── i18n/             Locales (currently `ko`) — auto-selected from system locale
 ├── types/            Shared TypeScript types
 └── ios/              Generated Xcode project (committed, do not edit by hand)
 ```

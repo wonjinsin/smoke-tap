@@ -47,6 +47,8 @@ After every `expo prebuild --clean`, three patches must run **in this order**:
 
 The App Group ID `group.com.example.smoketap` is duplicated across `plugins/withSharedTapStore.js` and `scripts/patch-widget.js` — keep them in sync. (Not in `app.json` — only `bundleIdentifier` lives there.)
 
+The `expo-widgets` plugin writes **absolute paths** to widget Swift files (`SmokeTapWidget.swift`, `index.swift`, `Info.plist`, `ExpoWidgetsTarget.entitlements`) into `ios/SmokeTap.xcodeproj/project.pbxproj`. If you run `npm run prebuild:ios` inside a worktree and later remove/move the worktree, the build will fail with "Build input files cannot be found". Re-run `npm run prebuild:ios` from the canonical repo path to refresh the paths.
+
 ## Editing rules
 
 - Do not edit files under `ios/` directly — they're regenerated. Edit `app.json`, `plugins/`, or `scripts/` instead.
