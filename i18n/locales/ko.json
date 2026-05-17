@@ -20,12 +20,27 @@
   },
   "stats": {
     "title": "통계",
-    "observe": "관찰",
     "day": "일",
     "week": "주",
     "month": "월",
     "totalThis": "이번 {{range}} 합계",
-    "recent": "최근 기록"
+    "recent": "최근 기록",
+    "rangeLabel": { "day": "일", "week": "주", "month": "달" },
+    "weekdays": {
+      "0": "일",
+      "1": "월",
+      "2": "화",
+      "3": "수",
+      "4": "목",
+      "5": "금",
+      "6": "토"
+    },
+    "timeAgo": {
+      "justNow": "방금",
+      "minutesAgo": "{{n}}분 전",
+      "hoursAgo": "{{n}}시간 전",
+      "daysAgo": "{{n}}일 전"
+    }
   },
   "settings": {
     "title": "설정",

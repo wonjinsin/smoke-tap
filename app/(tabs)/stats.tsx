@@ -9,12 +9,6 @@ import BarChart, { type BarItem } from '../../components/stats/BarChart';
 
 type Range = 'day' | 'week' | 'month';
 
-const RANGE_LABEL: Record<Range, string> = {
-  day: '일',
-  week: '주',
-  month: '달',
-};
-
 function dayBuckets(hourly: number[]): BarItem[] {
   const out: BarItem[] = [];
   for (let i = 0; i < 8; i++) {
@@ -26,11 +20,10 @@ function dayBuckets(hourly: number[]): BarItem[] {
 }
 
 function weekBuckets(daily: { date: string; count: number }[]): BarItem[] {
-  const days = ['일', '월', '화', '수', '목', '금', '토'];
   return daily.map((d) => {
     const [, , dayStr] = d.date.split('-');
     const dayNum = new Date(`${d.date}T00:00:00`).getDay();
-    return { count: d.count, label: days[dayNum] ?? dayStr };
+    return { count: d.count, label: t(`stats.weekdays.${dayNum}`) || dayStr };
   });
 }
 
@@ -44,12 +37,12 @@ function formatTime(ts: number): string {
 
 function timeAgo(ts: number, now: number): string {
   const diffMin = Math.max(0, Math.floor((now - ts) / 60000));
-  if (diffMin < 1) return '방금';
-  if (diffMin < 60) return `${diffMin}분 전`;
+  if (diffMin < 1) return t('stats.timeAgo.justNow');
+  if (diffMin < 60) return t('stats.timeAgo.minutesAgo', { n: diffMin });
   const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return `${diffHr}시간 전`;
+  if (diffHr < 24) return t('stats.timeAgo.hoursAgo', { n: diffHr });
   const diffDay = Math.floor(diffHr / 24);
-  return `${diffDay}일 전`;
+  return t('stats.timeAgo.daysAgo', { n: diffDay });
 }
 
 export default function StatsScreen() {
@@ -85,9 +78,6 @@ export default function StatsScreen() {
     <PaperBackground>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
-          <Text style={styles.observe} allowFontScaling={false}>
-            {t('stats.observe')}
-          </Text>
           <Text style={styles.title} allowFontScaling={false}>
             {t('stats.title')}
           </Text>
@@ -112,7 +102,7 @@ export default function StatsScreen() {
 
         <View style={styles.totalBlock}>
           <Text style={styles.totalCaption} allowFontScaling={false}>
-            {t('stats.totalThis', { range: RANGE_LABEL[range] })}
+            {t('stats.totalThis', { range: t(`stats.rangeLabel.${range}`) })}
           </Text>
           <Text style={styles.totalNumber} allowFontScaling={false}>
             {total}
@@ -160,17 +150,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 24,
   },
-  observe: {
-    fontSize: 13,
-    color: C.INK_40,
-    letterSpacing: 0.3,
-  },
   title: {
     fontSize: 28,
     fontWeight: '500',
     color: C.INK,
     letterSpacing: -0.6,
-    marginTop: 4,
   },
   segmentRow: {
     flexDirection: 'row',
