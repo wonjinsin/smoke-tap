@@ -8,7 +8,8 @@
   "main": {
     "today": "오늘",
     "noTapYet": "아직 기록 없음",
-    "elapsedSince": "마지막 후 {{value}}",
+    "lastTap": "마지막 기록 {{time}}",
+    "elapsedSince": "{{value}} 전",
     "units": {
       "d": "{{n}}일",
       "h": "{{n}}시간",

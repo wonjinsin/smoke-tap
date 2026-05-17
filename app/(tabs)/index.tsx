@@ -24,6 +24,14 @@ function formatDate(): string {
   }).format(new Date());
 }
 
+function formatTime(ts: number): string {
+  return new Intl.DateTimeFormat(undefined, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: false,
+  }).format(new Date(ts));
+}
+
 export default function HomeScreen() {
   const records = useTapStore((s) => s.records);
   const addTap = useTapStore((s) => s.addTap);
@@ -71,7 +79,15 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.metaRow}>
-          <ElapsedSince ts={lastTapTime} style={styles.metaText} />
+          {lastTapTime !== null && (
+            <Text style={styles.metaText} allowFontScaling={false}>
+              {t('main.lastTap', { time: formatTime(lastTapTime) })}
+            </Text>
+          )}
+          <ElapsedSince
+            ts={lastTapTime}
+            style={lastTapTime === null ? styles.metaText : styles.metaTextDim}
+          />
         </View>
 
         <View style={styles.hourlyWrap}>
@@ -125,6 +141,11 @@ const styles = StyleSheet.create({
   metaText: {
     fontSize: 13,
     color: C.INK_70,
+    letterSpacing: 0.2,
+  },
+  metaTextDim: {
+    fontSize: 13,
+    color: C.INK_40,
     letterSpacing: 0.2,
   },
   hourlyWrap: {
