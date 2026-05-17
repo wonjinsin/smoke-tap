@@ -14,6 +14,7 @@ struct SharedTapStore {
     static let appGroupId = "${APP_GROUP}"
     static let pendingKey = "pendingTaps"
     static let baseKey   = "baseTodayCount"
+    static let lastTapKey = "lastTapTimestamp"
 
     static func recordTap() {
         guard let d = UserDefaults(suiteName: appGroupId) else { return }
@@ -24,6 +25,13 @@ struct SharedTapStore {
     }
     static func getBaseCount() -> Int {
         UserDefaults(suiteName: appGroupId)?.integer(forKey: baseKey) ?? 0
+    }
+    static func setLastTap(_ ts: Double) {
+        UserDefaults(suiteName: appGroupId)?.set(ts, forKey: lastTapKey)
+    }
+    static func getLastTap() -> Date? {
+        let ts = UserDefaults(suiteName: appGroupId)?.double(forKey: lastTapKey) ?? 0
+        return ts > 0 ? Date(timeIntervalSince1970: ts) : nil
     }
 }
 `;
@@ -38,6 +46,7 @@ struct RecordTapIntent: AppIntent {
 
     func perform() async throws -> some IntentResult {
         SharedTapStore.recordTap()
+        SharedTapStore.setLastTap(Date().timeIntervalSince1970)
         WidgetCenter.shared.reloadTimelines(ofKind: "SmokeTapWidget")
         return .result()
     }
@@ -126,6 +135,7 @@ struct SharedTapStoreMainApp {
     static let appGroupId = "${APP_GROUP}"
     static let pendingKey = "pendingTaps"
     static let baseKey   = "baseTodayCount"
+    static let lastTapKey = "lastTapTimestamp"
 
     static func getPendingCount() -> Int {
         UserDefaults(suiteName: appGroupId)?.integer(forKey: pendingKey) ?? 0
@@ -135,6 +145,10 @@ struct SharedTapStoreMainApp {
     }
     static func setBaseCount(_ count: Int) {
         UserDefaults(suiteName: appGroupId)?.set(count, forKey: baseKey)
+        WidgetCenter.shared.reloadTimelines(ofKind: "SmokeTapWidget")
+    }
+    static func setLastTap(_ ts: Double) {
+        UserDefaults(suiteName: appGroupId)?.set(ts, forKey: lastTapKey)
         WidgetCenter.shared.reloadTimelines(ofKind: "SmokeTapWidget")
     }
 }
@@ -148,6 +162,7 @@ class SharedTapStoreModule: Module {
         AsyncFunction("getPendingCount") { () -> Int in SharedTapStoreMainApp.getPendingCount() }
         AsyncFunction("clearPending")    { () -> Void in SharedTapStoreMainApp.clearPending() }
         AsyncFunction("setBaseCount")    { (count: Int) -> Void in SharedTapStoreMainApp.setBaseCount(count) }
+        AsyncFunction("setLastTap")      { (ts: Double) -> Void in SharedTapStoreMainApp.setLastTap(ts) }
     }
 }
 `;

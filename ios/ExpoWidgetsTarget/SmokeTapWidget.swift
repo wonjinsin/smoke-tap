@@ -5,17 +5,26 @@ import AppIntents
 struct SmokeTapEntry: TimelineEntry {
     let date: Date
     let count: Int
+    let lastTap: Date?
 }
 
 struct SmokeTapProvider: TimelineProvider {
     func placeholder(in context: Context) -> SmokeTapEntry {
-        SmokeTapEntry(date: Date(), count: 0)
+        SmokeTapEntry(date: Date(), count: 0, lastTap: nil)
     }
     func getSnapshot(in context: Context, completion: @escaping (SmokeTapEntry) -> Void) {
-        completion(SmokeTapEntry(date: Date(), count: SharedTapStore.getBaseCount() + SharedTapStore.getPendingCount()))
+        completion(SmokeTapEntry(
+            date: Date(),
+            count: SharedTapStore.getBaseCount() + SharedTapStore.getPendingCount(),
+            lastTap: SharedTapStore.getLastTap()
+        ))
     }
     func getTimeline(in context: Context, completion: @escaping (Timeline<SmokeTapEntry>) -> Void) {
-        let entry = SmokeTapEntry(date: Date(), count: SharedTapStore.getBaseCount() + SharedTapStore.getPendingCount())
+        let entry = SmokeTapEntry(
+            date: Date(),
+            count: SharedTapStore.getBaseCount() + SharedTapStore.getPendingCount(),
+            lastTap: SharedTapStore.getLastTap()
+        )
         completion(Timeline(entries: [entry], policy: .never))
     }
 }
@@ -69,6 +78,23 @@ struct SmokeTapWidgetView: View {
                 .padding(.leading, 4)
                 .padding(.top, 2)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+            // Elapsed-since, bottom-left
+            Group {
+                if let last = entry.lastTap {
+                    HStack(spacing: 0) {
+                        Text(last, style: .relative)
+                        Text(" 전")
+                    }
+                } else {
+                    Text("기록 없음")
+                }
+            }
+            .font(.system(size: 11))
+            .foregroundColor(Color(hex: "1A1815").opacity(0.4))
+            .padding(.leading, 4)
+            .padding(.bottom, 4)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
 
             // Plus button, bottom-right
             if #available(iOS 17.0, *) {

@@ -7,8 +7,14 @@
   },
   "main": {
     "today": "오늘",
-    "lastTap": "마지막 기록 {{time}}",
-    "noTapYet": "아직 기록 없음"
+    "noTapYet": "아직 기록 없음",
+    "elapsedSince": "마지막 후 {{value}}",
+    "units": {
+      "d": "{{n}}일",
+      "h": "{{n}}시간",
+      "m": "{{n}}분",
+      "s": "{{n}}초"
+    }
   },
   "home": {
     "hourly": "시간대별",

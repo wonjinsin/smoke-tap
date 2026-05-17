@@ -16,3 +16,8 @@ export function clearPending(): Promise<void> {
 export function setBaseCount(count: number): Promise<void> {
   return native.setBaseCount(count);
 }
+
+/** 위젯의 elapsed 표시를 위해 마지막 탭 시각(epoch seconds)을 저장. null이면 0 = clear. */
+export function setLastTap(ts: number | null): Promise<void> {
+  return native.setLastTap(ts ?? 0);
+}

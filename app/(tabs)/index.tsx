@@ -9,18 +9,11 @@ import CountDisplay from '../../components/home/CountDisplay';
 import PlusButton from '../../components/home/PlusButton';
 import HourlyMini from '../../components/home/HourlyMini';
 import UndoToast from '../../components/home/UndoToast';
+import ElapsedSince from '../../components/home/ElapsedSince';
 
 function toLocalDateString(ts: number): string {
   const d = new Date(ts);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-
-function formatTime(ts: number): string {
-  return new Intl.DateTimeFormat(undefined, {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  }).format(new Date(ts));
 }
 
 function formatDate(): string {
@@ -78,11 +71,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.metaRow}>
-          <Text style={styles.metaText} allowFontScaling={false}>
-            {lastTapTime
-              ? t('main.lastTap', { time: formatTime(lastTapTime) })
-              : t('main.noTapYet')}
-          </Text>
+          <ElapsedSince ts={lastTapTime} style={styles.metaText} />
         </View>
 
         <View style={styles.hourlyWrap}>

@@ -8,6 +8,7 @@ struct RecordTapIntent: AppIntent {
 
     func perform() async throws -> some IntentResult {
         SharedTapStore.recordTap()
+        SharedTapStore.setLastTap(Date().timeIntervalSince1970)
         WidgetCenter.shared.reloadTimelines(ofKind: "SmokeTapWidget")
         return .result()
     }

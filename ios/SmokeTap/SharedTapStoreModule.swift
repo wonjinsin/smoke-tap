@@ -6,5 +6,6 @@ class SharedTapStoreModule: Module {
         AsyncFunction("getPendingCount") { () -> Int in SharedTapStoreMainApp.getPendingCount() }
         AsyncFunction("clearPending")    { () -> Void in SharedTapStoreMainApp.clearPending() }
         AsyncFunction("setBaseCount")    { (count: Int) -> Void in SharedTapStoreMainApp.setBaseCount(count) }
+        AsyncFunction("setLastTap")      { (ts: Double) -> Void in SharedTapStoreMainApp.setLastTap(ts) }
     }
 }

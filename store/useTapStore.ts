@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { TapRecord, DailyStat, WeeklySummary } from '../types/tap';
+import { setLastTap } from '../modules/SharedTapStore';
 
 type MonthlyBucket = { label: string; count: number };
 
@@ -30,16 +31,20 @@ export const useTapStore = create<TapState>()(
     (set, get) => ({
       records: [],
 
-      addTap: () =>
+      addTap: () => {
+        const ts = Date.now();
         set((state) => ({
-          records: [
-            ...state.records,
-            { id: String(Date.now()), timestamp: Date.now() },
-          ],
-        })),
+          records: [...state.records, { id: String(ts), timestamp: ts }],
+        }));
+        setLastTap(ts / 1000).catch(() => {});
+      },
 
-      removeLastTap: () =>
-        set((state) => ({ records: state.records.slice(0, -1) })),
+      removeLastTap: () => {
+        set((state) => ({ records: state.records.slice(0, -1) }));
+        const { records } = get();
+        const prev = records.length ? records[records.length - 1].timestamp / 1000 : null;
+        setLastTap(prev).catch(() => {});
+      },
 
       getTodayCount: () => {
         const today = toLocalDateString(Date.now());
