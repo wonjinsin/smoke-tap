@@ -70,6 +70,9 @@ export default function StatsScreen() {
   const total = data.reduce((a, b) => a + b.count, 0);
 
   const now = Date.now();
+  const currentHourBucket = Math.floor(new Date(now).getHours() / 3);
+  const highlightIndex =
+    range === 'day' ? currentHourBucket : data.length > 0 ? data.length - 1 : undefined;
   const recent = [...records]
     .slice(-4)
     .reverse()
@@ -116,7 +119,7 @@ export default function StatsScreen() {
           </Text>
         </View>
 
-        <BarChart data={data} highlightLast={range !== 'day'} />
+        <BarChart data={data} highlightIndex={highlightIndex} />
 
         <View style={styles.recentBlock}>
           <Text style={styles.recentCaption} allowFontScaling={false}>

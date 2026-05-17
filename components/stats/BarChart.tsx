@@ -9,18 +9,18 @@ export type BarItem = {
 
 type Props = {
   data: BarItem[];
-  highlightLast?: boolean;
+  highlightIndex?: number;
 };
 
 const BAR_AREA_HEIGHT = 180;
 
-export default function BarChart({ data, highlightLast = true }: Props) {
+export default function BarChart({ data, highlightIndex }: Props) {
   const max = Math.max(1, ...data.map((d) => d.count));
 
   return (
     <View style={styles.row}>
       {data.map((item, i) => {
-        const isHighlight = highlightLast && i === data.length - 1;
+        const isHighlight = highlightIndex !== undefined && i === highlightIndex;
         const heightPct = (item.count / max) * 100;
         const color = isHighlight ? C.INK : C.INK_40;
         return (
