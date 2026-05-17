@@ -14,7 +14,7 @@ Platform: iOS only (`app.json` → `platforms: ["ios"]`). Interactive widget req
 |---|---|
 | `npm run ios` | Build + run on iOS simulator |
 | `npm start` | Expo dev server only |
-| `npm run prebuild:ios` | `expo prebuild --clean` + 3 patches (see below) |
+| `npm run prebuild:ios` | `expo prebuild --platform ios --clean` + 3 patches (see below) |
 | `npm run patch-widget` | Re-patch widget Swift only |
 | `npx tsc --noEmit` | Type check |
 | `npx expo start --clear` | Clear Metro cache |
@@ -31,7 +31,7 @@ store/       Zustand global state (useTapStore.ts)
 modules/     Native module JS wrapper (SharedTapStore.ts)
 plugins/     Expo config plugins (withSharedTapStore writes Swift into ios/)
 scripts/     Post-prebuild patch scripts (run in fixed order)
-ios/         Generated Xcode project — committed. See ios/CLAUDE.md
+ios/         Generated Xcode project — committed. Do not edit by hand.
 constants/   Design tokens
 i18n/        Korean locale
 ```
@@ -49,8 +49,9 @@ The App Group ID `group.com.example.smoketap` is duplicated across `app.json`, `
 
 ## Editing rules
 
-- Do not edit files under `ios/` directly — they're regenerated. Edit `app.json`, `plugins/`, or `scripts/` instead. See `ios/CLAUDE.md`.
+- Do not edit files under `ios/` directly — they're regenerated. Edit `app.json`, `plugins/`, or `scripts/` instead.
 - Do not edit `ios/Pods/` — reinstalled on every `pod install`.
+- `i18n/locales/ko.json` contains orphan strings for unbuilt settings (`shakeUndo`, `haptic`, `iCloud`, `startDate`, `exportCsv`, `appIcon`, `appearance`). Grep the key before treating an i18n string as a shipped feature.
 
 ## Behavioral guidelines — ALWAYS APPLY
 
@@ -61,4 +62,3 @@ The App Group ID `group.com.example.smoketap` is duplicated across `app.json`, `
 ## More context
 
 - `README.md` — Korean user-facing intro
-- `ios/CLAUDE.md` — native iOS specifics
