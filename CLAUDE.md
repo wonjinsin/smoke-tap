@@ -45,7 +45,7 @@ After every `expo prebuild --clean`, three patches must run **in this order**:
 
 `npm run prebuild:ios` runs all three. Don't call `expo prebuild` alone — the build will fail or use stale Swift.
 
-The App Group ID `group.com.example.smoketap` is duplicated across `app.json`, `plugins/withSharedTapStore.js`, and `scripts/patch-widget.js` — keep them in sync.
+The App Group ID `group.com.example.smoketap` is duplicated across `plugins/withSharedTapStore.js` and `scripts/patch-widget.js` — keep them in sync. (Not in `app.json` — only `bundleIdentifier` lives there.)
 
 ## Editing rules
 
