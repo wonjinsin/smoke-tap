@@ -59,6 +59,10 @@ The App Group ID `group.com.example.smoketap` is duplicated across `app.json`, `
 
 @.claude/guidelines.md
 
+## Documentation language
+
+**All documentation in this repo (README.md, CLAUDE.md, guidelines, in-repo markdown) must be written in English.** This overrides any global rule that prefers another language for documentation. Code comments and commit messages also remain in English. (User-facing UI strings under `i18n/` are unaffected.)
+
 ## More context
 
-- `README.md` — Korean user-facing intro
+- `README.md` — user-facing intro (English)

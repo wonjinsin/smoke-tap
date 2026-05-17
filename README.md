@@ -4,9 +4,9 @@
 
 # Smoke Tap
 
-**한 번의 탭으로 흡연 한 번을 기록한다.**
+**One tap logs one smoke.**
 
-판단하지 않고, 목표를 강요하지 않는다. 숫자는 그저 숫자다.
+No judgment, no goals to hit. Numbers are just numbers.
 
 ![iOS](https://img.shields.io/badge/iOS-17%2B-000?logo=apple)
 ![Expo](https://img.shields.io/badge/Expo-SDK%2055-000?logo=expo)
@@ -17,9 +17,9 @@
 
 <table>
   <tr>
-    <td align="center"><img src="./statics/README/home.png" alt="홈 화면" width="240" /><br /><sub><b>오늘</b></sub></td>
-    <td align="center"><img src="./statics/README/stats.png" alt="통계 화면" width="240" /><br /><sub><b>통계</b></sub></td>
-    <td align="center"><img src="./statics/README/widget.png" alt="홈 스크린 위젯" width="240" /><br /><sub><b>홈 스크린 위젯</b></sub></td>
+    <td align="center"><img src="./statics/README/home.png" alt="Home screen" width="240" /><br /><sub><b>Today</b></sub></td>
+    <td align="center"><img src="./statics/README/stats.png" alt="Stats screen" width="240" /><br /><sub><b>Stats</b></sub></td>
+    <td align="center"><img src="./statics/README/widget.png" alt="Home screen widget" width="240" /><br /><sub><b>Home Screen Widget</b></sub></td>
   </tr>
 </table>
 
@@ -27,106 +27,106 @@
 
 ---
 
-마찰을 최소화하기 위해 설계되었다. 앱을 열어 큰 버튼을 한 번 누르거나, 홈 스크린 위젯의 `+` 버튼을 한 번 누르면 끝이다. 위젯은 앱을 띄우지 않고 App Intents로 직접 카운트를 올린다.
+Designed to minimize friction. Open the app and tap the big button once, or tap the `+` button on the home screen widget once — done. The widget increments the count directly via App Intents without launching the app.
 
-## ✦ 특징
+## ✦ Features
 
-- **원-탭 기록** — 큰 버튼 하나. 실수했다면 토스트의 `되돌리기` 로 직전 기록을 취소한다.
-- **홈 스크린 위젯** — iOS 17+ 인터랙티브 위젯. 앱을 열지 않고도 기록된다.
-- **로컬 우선** — 모든 데이터는 기기 내 `AsyncStorage`에 저장. 계정도, 서버도 없다.
-- **종이 질감의 미니멀 UI** — 페이퍼 배경 텍스처와 잉크 컬러 팔레트.
-- **통계** — 일/주/월 단위 차트와 시간대별 미니 그래프.
-- **목표 없음** — Smoke Tap은 사용자에게 목표를 설정하지 않는다.
+- **One-tap logging** — A single large button. If you tap by mistake, hit `Undo` on the toast to cancel the last entry.
+- **Home screen widget** — iOS 17+ interactive widget. Logs without opening the app.
+- **Local-first** — All data is stored on-device in `AsyncStorage`. No accounts, no server.
+- **Minimal paper-texture UI** — Paper background texture with an ink color palette.
+- **Stats** — Daily/weekly/monthly charts plus an hourly mini-graph.
+- **No goals** — Smoke Tap does not set goals for you.
 
-## ✦ 기술 스택
+## ✦ Tech Stack
 
-| 영역 | 사용 기술 |
+| Area | Tech |
 |---|---|
-| 런타임 | Expo SDK 55 · React Native 0.83 · React 19.2 |
-| 언어 | TypeScript (strict) |
-| 라우팅 | Expo Router (file-based, typed routes) |
-| 스타일 | NativeWind v4 + StyleSheet |
-| 상태 | Zustand v5 (`persist` + AsyncStorage) |
-| 위젯 | `expo-widgets` + Swift App Intents (iOS 17+) |
-| 네이티브 브리지 | Expo Modules (`SharedTapStore` App Group) |
+| Runtime | Expo SDK 55 · React Native 0.83 · React 19.2 |
+| Language | TypeScript (strict) |
+| Routing | Expo Router (file-based, typed routes) |
+| Styling | NativeWind v4 + StyleSheet |
+| State | Zustand v5 (`persist` + AsyncStorage) |
+| Widget | `expo-widgets` + Swift App Intents (iOS 17+) |
+| Native bridge | Expo Modules (`SharedTapStore` App Group) |
 
-## ✦ 시작하기
+## ✦ Getting Started
 
-### 사전 준비
+### Prerequisites
 
-- macOS · Xcode 15 이상
-- Node.js 20 이상 · npm
-- iOS 시뮬레이터 또는 iOS 17+ 실기기
+- macOS · Xcode 15+
+- Node.js 20+ · npm
+- iOS Simulator or an iOS 17+ device
 
-### 설치 & 실행
+### Install & Run
 
 ```bash
 npm install
-npm run prebuild:ios   # 최초 1회 또는 네이티브 코드 변경 후
-npm run ios            # 시뮬레이터로 빌드 + 실행
+npm run prebuild:ios   # first time, or after any native code change
+npm run ios            # build + run on simulator
 ```
 
 > [!IMPORTANT]
-> 처음 클론했거나 `app.json` / `plugins/` / `scripts/` 를 수정한 뒤에는 반드시 `npm run prebuild:ios` 를 먼저 실행한다. 일반 `expo prebuild` 만으로는 위젯 Swift가 빠지거나 stale 상태가 된다.
+> On a fresh clone, or after editing `app.json` / `plugins/` / `scripts/`, you must run `npm run prebuild:ios` first. Plain `expo prebuild` alone will drop the widget Swift or leave it stale.
 
-### 개발 서버만 띄우기
+### Dev Server Only
 
 ```bash
 npm start              # Metro / Expo dev server
-npx expo start --clear # Metro 캐시 초기화
+npx expo start --clear # clear Metro cache
 ```
 
-## ✦ 명령어
+## ✦ Commands
 
 | Command | Purpose |
 |---|---|
-| `npm run ios` | iOS 시뮬레이터에 빌드 + 실행 |
-| `npm start` | Expo dev server 만 실행 |
-| `npm run prebuild:ios` | `expo prebuild --clean` 후 3종 패치를 순서대로 적용 |
-| `npm run patch-widget` | 위젯 Swift 만 재패치 |
-| `npx tsc --noEmit` | 타입 체크 (테스트 러너는 설정되어 있지 않다) |
+| `npm run ios` | Build + run on iOS simulator |
+| `npm start` | Expo dev server only |
+| `npm run prebuild:ios` | `expo prebuild --clean` then apply 3 patches in order |
+| `npm run patch-widget` | Re-patch widget Swift only |
+| `npx tsc --noEmit` | Type check (no test runner is configured) |
 
-## ✦ 아키텍처
+## ✦ Architecture
 
 ```
 smoke-tap/
-├── app/              Expo Router 화면 (탭: index · stats · settings)
+├── app/              Expo Router screens (tabs: index · stats · settings)
 ├── components/       UI (common · home · settings · stats)
-├── store/            Zustand 전역 상태 (useTapStore.ts)
-├── modules/          네이티브 모듈 JS 래퍼 (SharedTapStore)
-├── widgets/          위젯 JSX (참조용 — 실제 빌드는 ios/ 의 Swift)
+├── store/            Zustand global state (useTapStore.ts)
+├── modules/          Native module JS wrapper (SharedTapStore)
+├── widgets/          Widget JSX (reference only — actual build is Swift in ios/)
 ├── plugins/          Expo config plugins
-├── scripts/          prebuild 후 적용되는 패치 스크립트
-├── constants/        디자인 토큰 (colors.ts)
-├── i18n/             한국어 로케일
-├── types/            공유 TypeScript 타입
-└── ios/              생성된 Xcode 프로젝트 (커밋됨, 직접 편집 금지)
+├── scripts/          Post-prebuild patch scripts
+├── constants/        Design tokens (colors.ts)
+├── i18n/             Korean locale
+├── types/            Shared TypeScript types
+└── ios/              Generated Xcode project (committed, do not edit by hand)
 ```
 
-### 데이터 흐름
+### Data Flow
 
-1. **앱에서 탭** — `useTapStore.addTap()` 이 `TapRecord` 를 push → AsyncStorage 에 영속화.
-2. **위젯에서 탭** — Swift App Intent 가 App Group `group.com.example.smoketap` 의 공유 저장소에 pending count 를 증가.
-3. **앱 포커스 시** — `SharedTapStore.getPendingCount()` 로 누적분을 가져와 records 에 머지 후 `clearPending()`.
+1. **Tap in app** — `useTapStore.addTap()` pushes a `TapRecord` → persisted to AsyncStorage.
+2. **Tap in widget** — A Swift App Intent increments the pending count in the App Group shared store `group.com.example.smoketap`.
+3. **App focus** — `SharedTapStore.getPendingCount()` reads the accumulated count, merges it into records, then calls `clearPending()`.
 
-### 위젯 빌드 체인 (중요)
+### Widget Build Chain (Important)
 
-`expo prebuild --clean` 후에는 **반드시 다음 순서로** 세 가지 패치가 적용되어야 한다 — `npm run prebuild:ios` 가 모두 처리한다.
+After `expo prebuild --clean`, three patches **must be applied in this order** — `npm run prebuild:ios` handles all of them.
 
-1. `scripts/patch-widget.js` — 위젯 Swift 소스를 덮어쓴다.
-2. `scripts/fix-build-phase-order.js` — patch Run Script 가 `[Expo] Configure project` **이후에** 실행되도록 Build Phase 순서를 조정.
-3. `scripts/patch-expo-modules-provider.js` — `ExpoModulesProvider.swift` 를 재생성.
+1. `scripts/patch-widget.js` — overwrites the widget Swift source.
+2. `scripts/fix-build-phase-order.js` — reorders Build Phases so the patch Run Script fires **after** `[Expo] Configure project`.
+3. `scripts/patch-expo-modules-provider.js` — regenerates `ExpoModulesProvider.swift`.
 
 > [!WARNING]
-> App Group ID `group.com.example.smoketap` 는 `app.json` · `plugins/withSharedTapStore.js` · `scripts/patch-widget.js` 세 곳에 하드코딩되어 있다. 바꿀 때는 세 곳을 동시에 수정해야 한다.
+> The App Group ID `group.com.example.smoketap` is hardcoded in three places: `app.json`, `plugins/withSharedTapStore.js`, and `scripts/patch-widget.js`. Changing it requires updating all three at once.
 
-## ✦ 편집 규칙
+## ✦ Editing Rules
 
-- `ios/` 내부 파일은 직접 편집하지 않는다 — 재생성된다. `app.json`, `plugins/`, `scripts/` 를 수정한다.
-- `ios/Pods/` 도 마찬가지로 `pod install` 시 재설치된다.
-- 코드 스타일/가이드라인은 [`CLAUDE.md`](CLAUDE.md) 와 [`.claude/guidelines.md`](.claude/guidelines.md) 참조.
+- Do not edit files under `ios/` directly — they are regenerated. Edit `app.json`, `plugins/`, or `scripts/` instead.
+- `ios/Pods/` is likewise reinstalled on every `pod install`.
+- For code style and guidelines, see [`CLAUDE.md`](CLAUDE.md) and [`.claude/guidelines.md`](.claude/guidelines.md).
 
-## ✦ 플랫폼
+## ✦ Platform
 
-iOS 전용 (`platforms: ["ios"]`). Android/Web 빌드는 설정되어 있지 않다.
-인터랙티브 홈 스크린 위젯은 **iOS 17 이상**이 필요하다 (App Intents).
+iOS only (`platforms: ["ios"]`). Android/Web builds are not configured.
+The interactive home screen widget requires **iOS 17 or later** (App Intents).
