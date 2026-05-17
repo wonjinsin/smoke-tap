@@ -29,6 +29,9 @@ No judgment, no goals to hit. Numbers are just numbers.
 
 Designed to minimize friction. Open the app and tap the big button once, or tap the `+` button on the home screen widget once — done. The widget increments the count directly via App Intents without launching the app.
 
+> [!NOTE]
+> This entire project — app, widget, native bridge, build patches, and docs — was vibe-coded end-to-end with [Claude Code](https://claude.com/claude-code). No hand-written code outside of conversational prompts.
+
 ## ✦ Features
 
 - **One-tap logging** — A single large button. If you tap by mistake, hit `Undo` on the toast to cancel the last entry.
